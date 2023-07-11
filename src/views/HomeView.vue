@@ -9,9 +9,7 @@
       <div class="text-white main-header-content">
         <h1 class="font-bold text-5xl mb-5">Listen to Great Music!</h1>
         <p class="w-full md:w-8/12 mx-auto">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et dolor mollis, congue
-          augue non, venenatis elit. Nunc justo eros, suscipit ac aliquet imperdiet, venenatis et
-          sapien. Duis sed magna pulvinar, fringilla lorem eget, ullamcorper urna.
+          Welcome to  Melody Haven, where melody meets creativity! Discover a harmonious community where you can showcase your own musical masterpieces while delighting in the tunes of fellow artists. Upload your tracks and let your sound reverberate through our platform, captivating listeners from all corners of the globe. Immerse yourself in a symphony of genres and experience the joy of discovering new sounds. Tune in, upload, and let the rhythm of your passion resound on our vibrant music website.
         </p>
       </div>
     </div>
