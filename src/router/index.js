@@ -25,7 +25,7 @@ const routes = [
     path: '/manage-music',
     component: ManageView,
     beforeEnter: (to, from, next) => {
-      console.log('manage')
+      
       next()
     },
     meta: {
