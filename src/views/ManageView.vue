@@ -3,7 +3,7 @@
   <section class="container mx-auto mt-6">
     <div class="md:grid md:grid-cols-3 md:gap-4">
       <div class="col-span-1">
-        <app-upload></app-upload>
+        <app-upload ref="upload" :addSong="addSong" />
       </div>
       <div class="col-span-2">
         <div class="bg-white rounded border border-gray-200 relative flex flex-col">
@@ -13,87 +13,15 @@
           </div>
           <div class="p-6">
             <!-- Composition Items -->
-            <div class="border border-gray-200 p-3 mb-4 rounded">
-              <div>
-                <h4 class="inline-block text-2xl font-bold">Song Name</h4>
-                <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right">
-                  <i class="fa fa-times"></i>
-                </button>
-                <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right">
-                  <i class="fa fa-pencil-alt"></i>
-                </button>
-              </div>
-              <div>
-                <form>
-                  <div class="mb-3">
-                    <label class="inline-block mb-2">Song Title</label>
-                    <input
-                      type="text"
-                      class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                      placeholder="Enter Song Title"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label class="inline-block mb-2">Genre</label>
-                    <input
-                      type="text"
-                      class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                      placeholder="Enter Genre"
-                    />
-                  </div>
-                  <button type="submit" class="py-1.5 px-3 mr-2 rounded text-white bg-green-600">
-                    Submit
-                  </button>
-                  <button type="button" class="py-1.5 px-3 rounded text-white bg-gray-600">
-                    Go Back
-                  </button>
-                </form>
-              </div>
-            </div>
-            <div class="border border-gray-200 p-3 mb-4 rounded">
-              <div>
-                <h4 class="inline-block text-2xl font-bold">Song Name</h4>
-                <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right">
-                  <i class="fa fa-times"></i>
-                </button>
-                <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right">
-                  <i class="fa fa-pencil-alt"></i>
-                </button>
-              </div>
-            </div>
-            <div class="border border-gray-200 p-3 mb-4 rounded">
-              <div>
-                <h4 class="inline-block text-2xl font-bold">Song Name</h4>
-                <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right">
-                  <i class="fa fa-times"></i>
-                </button>
-                <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right">
-                  <i class="fa fa-pencil-alt"></i>
-                </button>
-              </div>
-            </div>
-            <div class="border border-gray-200 p-3 mb-4 rounded">
-              <div>
-                <h4 class="inline-block text-2xl font-bold">Song Name</h4>
-                <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right">
-                  <i class="fa fa-times"></i>
-                </button>
-                <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right">
-                  <i class="fa fa-pencil-alt"></i>
-                </button>
-              </div>
-            </div>
-            <div class="border border-gray-200 p-3 mb-4 rounded">
-              <div>
-                <h4 class="inline-block text-2xl font-bold">Song Name</h4>
-                <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right">
-                  <i class="fa fa-times"></i>
-                </button>
-                <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right">
-                  <i class="fa fa-pencil-alt"></i>
-                </button>
-              </div>
-            </div>
+            <app-composition-item
+              v-for="(song, i) in songs"
+              :key="song.docId"
+              :song="song"
+              :updateSong="updateSong"
+              :index="i"
+              :removeSong="removeSong"
+              :updateUnsavedFlag="updateUnsavedFlag"
+            />
           </div>
         </div>
       </div>
@@ -103,12 +31,58 @@
 
 <script>
 // import useUSerStore from '@/stores/user'
-import AppUpload from "@/components/AppUploadView.vue"
+import AppUpload from '@/components/AppUpload.vue'
+import AppCompositionItem from '@/components/AppCompositionItem.vue'
+
+import { songsCollection, auth } from '@/includes/firebase'
+
 export default {
   name: 'manage',
 
-  components : {
+  components: {
     AppUpload,
+    AppCompositionItem
+  },
+
+  data() {
+    return {
+      songs: [],
+      unsavedFlaq: false
+    }
+  },
+
+  async created() {
+    const snapshot = await songsCollection.where('uid', '==', auth.currentUser.uid).get()
+
+    snapshot.forEach(this.addSong)
+  },
+  methods: {
+    updateSong(i, values) {
+      this.song[i].modified_name = values.modified_name
+      this.songs[i].genre = values.genre
+    },
+    removeSong(i) {
+      this.songs.splice(i, 1)
+    },
+    addSong(document) {
+      const song = {
+        ...document.data(),
+        docId: document.id
+      }
+      this.songs.push(song)
+    },
+    updateUnsavedFlag(value) {
+      this.unsavedFlaq = value
+    }
+  },
+
+  beforeRouteLeave(to, from, next) {
+    if (!this.unsavedFlaq) {
+      next()
+    } else {
+      const leave = confirm('You have unsaved changes. Are you sure you want to leave?')
+      next(leave)
+    }
   }
 
   // beforeRouteEnter(to, from, next) {
@@ -116,8 +90,5 @@ export default {
   //   console.log('before route enter gaurd')
   //   store.userLoggedIn ? next() : next({ name: 'home' })
   // }
-
-
-  
 }
 </script>
