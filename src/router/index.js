@@ -4,6 +4,7 @@ import AboutView from '@/views/AboutView.vue'
 import ManageView from '@/views/ManageView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import useUserStore from '@/stores/user'
+import SongView from '@/views/SongView.vue'
 
 const routes = [
   {
@@ -25,7 +26,6 @@ const routes = [
     path: '/manage-music',
     component: ManageView,
     beforeEnter: (to, from, next) => {
-      
       next()
     },
     meta: {
@@ -39,6 +39,18 @@ const routes = [
     redirect: { name: 'manage' }
   },
   // ---------------------------------------//
+
+  {
+    name: 'song',
+    path: '/song/:id',
+    component: SongView
+  },
+
+
+  // {
+  //   path: "/:catchAll(.*)*",
+  //   redirect: { name: "home" },
+  // },
   {
     path: '/:catchAll(.*)*',
     name: '404',

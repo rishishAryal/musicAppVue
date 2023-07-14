@@ -15,6 +15,7 @@
   "dependencies": {
     "@vee-validate/rules": "^4.10.5",
     "firebase": "^8.10.1",
+    "howler": "^2.2.3",
     "pinia": "^2.1.4",
     "vee-validate": "^4.10.5",
     "vue": "^3.3.4",

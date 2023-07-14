@@ -4,3 +4,10 @@
   </div>
 </template>
 
+<script></script>
+
+<style>
+.about h1 {
+  text-align: left;
+}
+</style>

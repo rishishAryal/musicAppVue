@@ -7,8 +7,13 @@
       </div>
       <div class="col-span-2">
         <div class="bg-white rounded border border-gray-200 relative flex flex-col">
-          <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
-            <span class="card-title">My Songs</span>
+          <div  class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
+            <span class="card-title" v-if="songs.length > 0">
+              My Songs ({{ songs.length }})
+            </span>
+            <span class="card-title" v-else>
+              Currently, there are no songs ):
+            </span>
             <i class="fa fa-compact-disc float-right text-green-400 text-2xl"></i>
           </div>
           <div class="p-6">
@@ -37,7 +42,7 @@ import AppCompositionItem from '@/components/AppCompositionItem.vue'
 import { songsCollection, auth } from '@/includes/firebase'
 
 export default {
-  name: 'manage',
+  name: 'manageView',
 
   components: {
     AppUpload,
@@ -58,7 +63,7 @@ export default {
   },
   methods: {
     updateSong(i, values) {
-      this.song[i].modified_name = values.modified_name
+      this.songs[i].modified_name = values.modified_name
       this.songs[i].genre = values.genre
     },
     removeSong(i) {
