@@ -17,13 +17,13 @@
       </button>
       <div class="z-50 text-left ml-8">
         <!-- Song Info -->
-        <div class="text-3xl font-bold">{{ song.modified_name }}</div>
+        <div class="text-3xl font-bold">{{ song.modified_name.split('.')[0] }}</div>
         <div>{{ song.genre }}</div>
       </div>
     </div>
   </section>
   <!-- Form -->
-  <section class="container mx-auto mt-6">
+  <section class="container mx-auto mt-6" id="commnets">
     <div class="bg-white rounded border border-gray-200 relative flex flex-col">
       <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
         <!-- Comment Count -->
@@ -134,7 +134,6 @@ export default {
   },
 
   methods: {
-
     ...mapActions(usePlayerStore, ['newSong']),
 
     async addComment(values, { resetForm }) {
