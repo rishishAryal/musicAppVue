@@ -1,0 +1,13 @@
+{
+  "home": {
+    "listen": "Listen to Great Music!",
+    "introduction": "Welcome to Melody Haven, where melody meets creativity! Discover a harmonious community where you can showcase your own musical masterpieces while delighting in the tunes of fellow artists. Upload your tracks and let your sound reverberate through our platform, captivating listeners from all corners of the globe. Immerse yourself in a symphony of genres and experience the joy of discovering new sounds. Tune in, upload, and let the rhythm of your passion resound on our vibrant music website."
+  },
+  "song": {
+    "comment_count": "No comments | 1 comment | {count} comments"
+  },
+  "register": {
+    "accept": "I accept Melody Haven's {0} ",
+    "tos": "Term of Services"
+  }
+}
