@@ -8,8 +8,8 @@
           name: 'home'
         }"
         exact-active-class="no-active"
-        >Melody Haven</router-link
-      >
+        >Melody Haven</router-link>
+      
 
       <div class="flex flex-grow items-center">
         <!-- Primary Navigation -->

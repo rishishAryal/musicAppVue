@@ -10,6 +10,9 @@ import VeeValidatePlugin from './includes/validation'
 import { auth } from './includes/firebase'
 import Icon from './directives/icon'
 import i18n from './includes/i18n'
+import { registerSW } from 'virtual:pwa-register'
+registerSW({ immediate: true })
+
 let app
 
 auth.onAuthStateChanged(() => {
@@ -24,3 +27,4 @@ auth.onAuthStateChanged(() => {
     app.mount('#app')
   }
 })
+    

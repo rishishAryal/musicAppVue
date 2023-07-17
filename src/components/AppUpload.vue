@@ -62,6 +62,17 @@ export default {
         if (file.type !== 'audio/mpeg') {
           return
         }
+        if (!navigator.onLine) {
+          this.uploads.push({
+            task: {},
+            current_progress: 100,
+            name: file.name,
+            variant: 'bg-red-400',
+            icon: 'fas fa-times',
+            text_class: 'text-red-400'
+          })
+          return
+        }
         const storageRef = storage.ref() //music-c47cd.appspot.com
         const songsRef = storageRef.child(`songs/${file.name}`) //music-c47cd.appspot.com/songs/example.mp3
         const task = songsRef.put(file) //uploading
@@ -100,8 +111,8 @@ export default {
             song.url = await task.snapshot.ref.getDownloadURL()
 
             const songRef = await songsCollection.add(song)
-            const songSnapshot =  await songRef.get()
-            this.addSong(songSnapshot);
+            const songSnapshot = await songRef.get()
+            this.addSong(songSnapshot)
             this.uploads[uploadIndex].variant = 'bg-green-400'
             this.uploads[uploadIndex].icon = 'fas fa-sharp fa-solid fa-check fa-bounce fa-lg'
             this.uploads[uploadIndex].text_class = 'text-green-400'
