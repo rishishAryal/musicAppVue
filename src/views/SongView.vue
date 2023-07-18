@@ -17,7 +17,7 @@
       </button>
       <div class="z-50 text-left ml-8">
         <!-- Song Info -->
-        <div class="text-3xl font-bold">{{ song.modified_name.split('.')[0] }}</div>
+        <div class="text-3xl font-bold">{{ song.modified_name}}</div>
         <div>{{ song.genre }}</div>
         <div class="song-price">{{ $n(9.99, 'currency') }}</div>
       </div>
@@ -123,17 +123,19 @@ export default {
     }
   },
 
-  async created() {
-    const docSnapshot = await songsCollection.doc(this.$route.params.id).get()
-    if (!docSnapshot.exists) {
-      this.$router.push({ name: 'home' })
-      return
-    }
+  async beforeRouteEnter(to, from, next) {
+    const docSnapshot = await songsCollection.doc(to.params.id).get()
+    next((vm) => {
+      if (!docSnapshot.exists) {
+        vm.$router.push({ name: 'home' })
+        return
+      }
 
-    const { sort } = this.$route.query
-    this.sort = sort === '1' || sort === '2' ? sort : '1'
-    this.song = docSnapshot.data()
-    this.getComments()
+      const { sort } = vm.$route.query
+      vm.sort = sort === '1' || sort === '2' ? sort : '1'
+      vm.song = docSnapshot.data()
+      vm.getComments()
+    })
   },
 
   methods: {

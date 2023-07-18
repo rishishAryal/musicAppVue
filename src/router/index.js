@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
-import AboutView from '@/views/AboutView.vue'
-import ManageView from '@/views/ManageView.vue'
-import NotFoundView from '@/views/NotFoundView.vue'
+
 import useUserStore from '@/stores/user'
-import SongView from '@/views/SongView.vue'
+
+const HomeView = () => import('@/views/HomeView.vue')
+const AboutView = () => import('@/views/AboutView.vue')
+const ManageView = () => import('@/views/ManageView.vue')
+const NotFoundView = () => import('@/views/NotFoundView.vue')
+const SongView = () => import('@/views/SongView.vue')
 
 const routes = [
   {
@@ -45,7 +47,6 @@ const routes = [
     path: '/song/:id',
     component: SongView
   },
-
 
   // {
   //   path: "/:catchAll(.*)*",

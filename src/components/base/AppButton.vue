@@ -1,0 +1,5 @@
+<template>
+
+<button type="button">Click here</button>
+
+</template>
